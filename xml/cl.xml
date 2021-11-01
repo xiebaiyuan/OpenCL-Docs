@@ -234,6 +234,8 @@ server's OpenCL/api-docs repository.
         <type category="define">typedef <type>cl_ulong</type>         <name>cl_semaphore_payload_khr</name>;</type>
         <type category="define">typedef <type>cl_uint</type>          <name>cl_external_semaphore_handle_type_khr</name>;</type>
         <type category="define">typedef <type>cl_uint</type>          <name>cl_external_memory_handle_type_khr</name>;</type>
+        <type category="define">typedef <type>cl_uint</type>          <name>cl_image_tiling_ext</name>;</type>
+        <type category="define">typedef <type>cl_bitfield</type>      <name>cl_device_image_tiling_capabilities_ext</name>;</type>
 
             <comment>Structure types</comment>
         <type category="struct" name="cl_dx9_surface_info_khr">
@@ -1226,6 +1228,18 @@ server's OpenCL/api-docs repository.
             <unused start="2" end="9999"/>
     </enums>
 
+    <enums name="cl_image_tiling_ext" vendor="Multiple">
+            <unused start="0" end="0"/>
+        <enum value="1"             name="CL_IMAGE_TILING_LINEAR_EXT"/>
+        <enum value="2"             name="CL_IMAGE_TILING_OPTIMAL_EXT"/>
+            <unused start="3" end="0xFFFFFFFF"/>
+    </enums>
+    <enums name="cl_device_image_tiling_capabilities_ext" vendor="Multiple" type="bitmask">
+        <enum bitpos="0"            name="CL_DEVICE_IMAGE_TILING_DEVICE_ACCESS_EXT"/>
+        <enum bitpos="1"            name="CL_DEVICE_IMAGE_TILING_HOST_ACCESS_EXT"/>
+            <unused start="2" end="63"/>
+    </enums>
+
     <enums start="0x10000" end="0x1FFFF" name="cl_khronos_vendor_id" vendor="Khronos">
         <comment>
             In order to synchronize vendor IDs across Khronos APIs, Vulkan's vk.xml
@@ -2045,7 +2059,10 @@ server's OpenCL/api-docs repository.
 
     <enums start="0x4230" end="0x423F" name="enums.4230" comment="Reserved for EXT extensions">
         <enum value="0x4230"        name="CL_DEVICE_CXX_FOR_OPENCL_NUMERIC_VERSION_EXT"/>
-            <unused start="0x4231" end="0x423F"/>
+        <enum value="0x4231"        name="CL_DEVICE_IMAGE_TILING_CAPABILITIES_EXT"/>
+        <enum value="0x4232"        name="CL_MEM_IMAGE_TILING_EXT"/>
+        <enum value="0x4233"        name="CL_IMAGE_TILING_EXT"/>
+            <unused start="0x4234" end="0x423F"/>
     </enums>
 
     <enums start="0x4240" end="0x424F" name="enums.4240" comment="Reserved for ICD Loader Layers">
@@ -6593,6 +6610,29 @@ server's OpenCL/api-docs repository.
         <extension name="cl_pocl_content_size" supported="opencl">
             <require>
                 <command name="clSetContentSizeBufferPoCL"/>
+            </require>
+        </extension>
+        <extension name="cl_ext_image_tiling_control" supported="opencl">
+            <require>
+                <type name="cl_image_tiling_ext"/>
+                <type name="cl_device_image_tiling_capabilities_ext"/>
+            </require>
+            <require comment="cl_image_tiling_ext">
+                <enum name="CL_IMAGE_TILING_LINEAR_EXT"/>
+                <enum name="CL_IMAGE_TILING_OPTIMAL_EXT"/>
+            </require>
+            <require comment="cl_device_info">
+                <enum name="CL_DEVICE_IMAGE_TILING_CAPABILITIES_EXT"/>
+            </require>
+            <require comment="cl_device_image_tiling_capabilities_ext">
+                <enum name="CL_DEVICE_IMAGE_TILING_HOST_ACCESS_EXT"/>
+                <enum name="CL_DEVICE_IMAGE_TILING_DEVICE_ACCESS_EXT"/>
+            </require>
+            <require comment="cl_mem_properties">
+                <enum name="CL_MEM_IMAGE_TILING_EXT"/>
+            </require>
+            <require comment="cl_image_info">
+                <enum name="CL_IMAGE_TILING_EXT"/>
             </require>
         </extension>
     </extensions>
