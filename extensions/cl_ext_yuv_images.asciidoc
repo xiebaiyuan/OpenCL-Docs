@@ -409,8 +409,8 @@ one of the pre-defined packed formats or {CL_UNORM_INT8}, {CL_UNORM_INT10_EXT},
 {CL_UNORM_INT10X6_EXT}, or {CL_UNORM_INT16}.
 
 When `read_imagef` is used with images that have a YUV channel order, the sampler
-used must have an addressing mode of `CLK_ADDRESS_CLAMP`; otherwise the values
-returned are undefined.
+used must have an addressing mode of `CLK_ADDRESS_NONE` or `CLK_ADDRESS_CLAMP`;
+otherwise the values returned are undefined.
 --
 
 (Modify Section 6.15.15.3, *Built-in Image Sampler-less Read Functions*) ::
